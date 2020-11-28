@@ -16,8 +16,13 @@ jobs:
           distribution: Ubuntu-20.04
       
       - shell: wsl-bash {0}
+        name: Install Prerequisites
         run: |
-          echo $PWD
+            sudo apt-get install -y build-essential
+      
+      - shell: wsl-bash {0}
+        name: Download and build Perl 5
+        run: |
           PERL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
           EXTR=perl
           PREFIX=$PWD/perlprefix
