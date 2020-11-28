@@ -17,32 +17,31 @@ jobs:
             sudo apt-get install -y build-essential
       
       - shell: wsl-bash {0}
-        name: Download and build Perl 5 (case-sensitive mount)
+        name: Save Build Script
         run: |
-          cd ~
+            cat <<EOF > ~/build.sh
+            
+            URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
+            echo [case-sensitive] Downloading and compiling in [$PWD] from [$URL]
+            mkdir perl 
+            wget -nc $URL
+            tar -xf $(basename $URL) --strip-components=1 --directory=perl
+            cd perl
 
-          URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
-          echo [case-sensitive] Downloading and compiling in [$PWD] from [$URL]
-          mkdir perl 
-          wget -nc $URL
-          tar -xf $(basename $URL) --strip-components=1 --directory=perl
-          cd perl
-
-          bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
-          make
-          make install
+            bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
+            make
+            make install
+            
+            EOF
 
       - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-insensitive mount)
+        run: |
+          bash ~/build.sh
+      
+      - shell: wsl-bash {0}
+        name: Download and build Perl 5 (case-sensitive mount)
         if: {{ always() }}
         run: |
-          URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
-          echo [case-insensitive] Downloading and compiling in [$PWD] from [$URL]
-          mkdir perl 
-          wget -nc $URL
-          tar -xf $(basename $URL) --strip-components=1 --directory=perl
-          cd perl
-
-          bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
-          make
-          make install
+          cd ~
+          bash ~/build.sh
