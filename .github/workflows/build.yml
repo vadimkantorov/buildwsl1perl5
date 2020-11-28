@@ -10,7 +10,11 @@ jobs:
       - uses: Vampire/setup-wsl@v1
         with:
           distribution: Ubuntu-20.04
-      
+
+      - shell: wsl-bash {0}
+        name: Install Prerequisites
+        run: sudo apt-get install -y build-essential
+
       - shell: wsl-bash {0}
         name: Save Build Script
         run: |
@@ -33,18 +37,10 @@ jobs:
             EOF
       
       - shell: wsl-bash {0}
-        name: Install Prerequisites
-        run: |
-            sudo apt-get install -y build-essential
-
-      - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-insensitive mount)
-        run: |
-          bash ~/build.sh
+        run: bash ~/build.sh
       
       - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-sensitive mount)
         if: ${{ always() }}
-        run: |
-          cd ~
-          bash ~/build.sh
+        run: cd ~ && bash ~/build.sh
