@@ -1,10 +1,9 @@
-# https://www.freecodecamp.org/news/a-lightweight-tool-agnostic-ci-cd-flow-with-github-actions/
-# https://github.com/actions/upload-release-asset
-# https://github.com/actions/upload-release-asset/issues/28
-
 name: build
 
 on: workflow_dispatch
+
+env:
+  URL: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
 
 jobs:
   build:
@@ -23,15 +22,14 @@ jobs:
       - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-sensitive mount)
         run: |
-          URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
-          PREFIX=$PWD/prefix
+          cd ~
 
-          echo Downloading and compiling in [$PWD]
-          mkdir -p $PREFIX perl 
+          echo Downloading and compiling in [$PWD] from [$URL]
+          mkdir perl 
           wget -nc $URL
           tar -xf $(basename $URL) --strip-components=1 --directory=perl
           cd perl
 
-          bash +x ./Configure -sde -Dprefix=$PREFIX
+          bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
           make
           make install
