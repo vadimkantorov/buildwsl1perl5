@@ -25,8 +25,9 @@ jobs:
             cd perl
 
             bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
+            test -f Makefile
             make -j2
-            make -j2 test
+            #make -j2 test
             make -j2 install
             
             EOF
