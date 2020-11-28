@@ -1,0 +1,33 @@
+# https://www.freecodecamp.org/news/a-lightweight-tool-agnostic-ci-cd-flow-with-github-actions/
+# https://github.com/actions/upload-release-asset
+# https://github.com/actions/upload-release-asset/issues/28
+
+name: build
+
+on: workflow_dispatch
+
+defaults:
+  run:
+    shell: wsl-bash_Ubuntu-20.04 {0}
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - uses: Vampire/setup-wsl@v1
+      - run: |
+          echo $PWD
+          PERL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
+          EXTR=perl
+          PREFIX=$PWD/perlprefix
+
+          mkdir -p $PREFIX perl_
+          wget -nc $PERL
+          
+          tar -xf $(basename $PERL) --strip-components=1 --directory=perl_
+          rm -rf $EXTR
+          cp -r perl_ $EXTR
+
+          cd $EXTR
+          bash +x ./Configure -sde -Dprefix=$PREFIX
+          make
