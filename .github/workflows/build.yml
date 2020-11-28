@@ -20,6 +20,7 @@ jobs:
         run: |
             cat << 'EOF' > ~/build.sh
             
+            export MAKEFLAGS=-j2
             URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
             echo Downloading and compiling in [$PWD] from [$URL]
             
@@ -30,9 +31,8 @@ jobs:
 
             bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
             test -f Makefile
-            make -j2
-            #make -j2 test
-            make -j2 install
+            make
+            make install
             
             EOF
       
