@@ -1,4 +1,4 @@
-Example of a build test of a library via Github Actions. Here it builds Perl 5 on Windows on WSLv1 (Ubuntu 20.04).
+Example of a build test of a library via Github Actions. Here it builds Perl 5 on Windows on WSLv1 (Ubuntu 20.04, both case-sensitive and case-insensitive mounts).
 
 For that I use a Github Action [setup-wsl](https://github.com/Vampire/setup-wsl).
 
