@@ -1,7 +1,3 @@
-# https://www.freecodecamp.org/news/a-lightweight-tool-agnostic-ci-cd-flow-with-github-actions/
-# https://github.com/actions/upload-release-asset
-# https://github.com/actions/upload-release-asset/issues/28
-
 name: build
 
 on: workflow_dispatch
