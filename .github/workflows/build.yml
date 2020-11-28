@@ -19,10 +19,11 @@ jobs:
       - shell: wsl-bash {0}
         name: Save Build Script
         run: |
-            cat <<EOF > ~/build.sh
+            cat << 'EOF' > ~/build.sh
             
             URL=https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
-            echo [case-sensitive] Downloading and compiling in [$PWD] from [$URL]
+            echo Downloading and compiling in [$PWD] from [$URL]
+            
             mkdir perl 
             wget -nc $URL
             tar -xf $(basename $URL) --strip-components=1 --directory=perl
