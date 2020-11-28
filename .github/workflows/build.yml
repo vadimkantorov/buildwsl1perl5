@@ -41,7 +41,7 @@ jobs:
       
       - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-sensitive mount)
-        if: {{ always() }}
+        if: ${{ always() }}
         run: |
           cd ~
           bash ~/build.sh
