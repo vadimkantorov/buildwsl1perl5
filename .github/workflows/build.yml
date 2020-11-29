@@ -35,7 +35,7 @@ jobs:
       
       - shell: wsl-bash {0}
         name: Download and build Perl 5 (case-insensitive mount)
-        run: cd $USERPROFILE && bash ~/build.sh
+        run: cd $(wslpath "$USERPROFILE") && bash ~/build.sh
         env:
           WSLENV: USERPROFILE
       
