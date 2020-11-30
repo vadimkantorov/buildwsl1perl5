@@ -26,8 +26,7 @@ jobs:
             tar -xf $(basename $URL) --strip-components=1 --directory=perl
             cd perl
 
-            bash +x ./Configure -sde -Dprefix="$PWD/../prefix"
-            test -f Makefile
+            bash +x ./Configure -sde -Dprefix="$PWD/../prefix" && test -f Makefile
             make
             make install
             
